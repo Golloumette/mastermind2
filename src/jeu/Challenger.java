@@ -1,7 +1,7 @@
 package jeu;
 
 
-import java.util.InputMismatchException;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -50,6 +50,7 @@ public class Challenger {
         Scanner sc = new Scanner(System.in);
         Integer propositionChiffre = 0;
         boolean chiffre = false;
+        sc.nextLine();
         System.out.println("Merci de saisir un code à " + config.getCombinaison() + " chiffres");
         do {
 
@@ -59,9 +60,9 @@ public class Challenger {
                  chiffre = true;
              } catch ( NumberFormatException  e ){
                 System.out.println("Cette valeur n'est pas un nombre,merci de saisir un code à " + config.getCombinaison() + " chiffres");
-             } catch (StringIndexOutOfBoundsException e){
+             } /*catch (StringIndexOutOfBoundsException e){
                  System.out.println("Cette valeur n'est pas un nombre,merci de saisir un code à " + config.getCombinaison() + " chiffres");
-             }
+             }*/
 
             //proposition = String.valueOf(chiffre);
 
