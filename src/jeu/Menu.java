@@ -1,9 +1,12 @@
 package jeu;
 
+import org.apache.log4j.Logger;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
+    private static org.apache.log4j.Logger logger = Logger.getLogger(Menu.class);
 
     /**
      * Afficher le menu de selection
@@ -20,19 +23,22 @@ public class Menu {
 
 
     public int runMenu() {
+        logger.info(" Entrée dans runMenu");
+
         Scanner sc = new Scanner(System.in);
         this.displayAvailableMenu();
-        int nbMenu ;
+        int nbMenu;
 
-            try{ nbMenu = sc.nextInt();
+        try {
+            nbMenu = sc.nextInt();
 
-            } catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
+            logger.error("", e);
+            nbMenu = 0;
+        }
 
-                nbMenu=0;
-            }
-
-         //} //while (!responseIsGood);
-         return nbMenu;
+        //} //while (!responseIsGood);
+        return nbMenu;
 
 
     }

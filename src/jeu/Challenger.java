@@ -2,10 +2,15 @@ package jeu;
 
 
 
+import org.apache.log4j.Logger;
+
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Challenger {
+    private static Logger logger = Logger.getLogger(Challenger.class);
     private Config config = new Config();
     String code1 = "";
     //private String proposition;
@@ -27,6 +32,7 @@ public class Challenger {
 
 
     public void play() {
+        logger.info("Sortie de la methode play");
         System.out.println("Bienvenue dans le mode challenger");
         generateCode();
         int nbCoup = 0;
@@ -35,51 +41,44 @@ public class Challenger {
         do {
             retour = saisieUtilisateur();
             nbCoup++;
-        } while (!retour && nbCoup < config.getEssai());
+        } while (!retour && nbCoup < config.getEssai().intValue());
 
         if (nbCoup < 2)
             System.out.println("Vous avez gagné en  " + nbCoup + " coup");
-        else if (nbCoup != config.getEssai())
+        else if (retour && nbCoup <= config.getEssai().intValue() )
             System.out.println("Vous avez réussi en " + nbCoup + " coups");
         else
-            System.out.println("Vous avez perdu la solution était " + code1);
+            System.out.println("Vous avez perdu la solution était " +  code1 +" "+ nbCoup);
+        logger.info("Sortie de la methode play");
 
     }
 
     public boolean saisieUtilisateur() {
+        logger.debug("Entre dans la methode saisieUtilisateur");
         Scanner sc = new Scanner(System.in);
-        Integer propositionChiffre = 0;
-        boolean chiffre = false;
-        sc.nextLine();
+        String propo1 = "";
+        boolean b;
+        //String regExp = "^[0-9]+[0-9]$";
         System.out.println("Merci de saisir un code à " + config.getCombinaison() + " chiffres");
         do {
 
-             String proposition = sc.nextLine();
-             try {
-                 propositionChiffre = Integer.parseInt(proposition);
-                 chiffre = true;
-             } catch ( NumberFormatException  e ){
-                System.out.println("Cette valeur n'est pas un nombre,merci de saisir un code à " + config.getCombinaison() + " chiffres");
-             } /*catch (StringIndexOutOfBoundsException e){
-                 System.out.println("Cette valeur n'est pas un nombre,merci de saisir un code à " + config.getCombinaison() + " chiffres");
-             }*/
+              propo1 = sc.nextLine();
+            //propo1.matches(regExp);
+             //Pattern p = Pattern.compile(propo1);
+            // Matcher m = p.matcher("[0-9]");
 
-            //proposition = String.valueOf(chiffre);
+              b = Pattern.matches("^[0-9]+[0-9]$",(propo1));
+        } while (!b);
 
-            //  if (proposition.length() < code1.length());
-            //System.out.println("Vous devez saisir un code à " + config.getCombinaison() + " chiffres");
-            // verouiller par des chiffres
-        } while (chiffre!= true);
-                //proposition.length() != code1.length());
-        String propo2 = String.valueOf(propositionChiffre);
+       // String propo2 = String.valueOf(propositionChiffre);
         boolean retour = true;
         for (int i = 0; i < config.getCombinaison(); i++) {
             char code3 = code1.charAt(i);
-            char propo1 = propo2.charAt(i);
-            if (code3 == propo1)
+            char propo2 = propo1.charAt(i);
+            if (code3 == propo2)
                 System.out.print("=");
 
-            else if (code3 < propo1) {
+            else if (code3 < propo2) {
                 System.out.print("+");
                 retour = false;
             } else {
@@ -88,7 +87,9 @@ public class Challenger {
             }
         }
         System.out.println("");
+        logger.debug("Sortie de la methode saisieUtilisateur");
         return retour;
+
     }
 }
 
