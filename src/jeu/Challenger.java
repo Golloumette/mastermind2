@@ -1,19 +1,17 @@
 package jeu;
 
 
-
 import org.apache.log4j.Logger;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Challenger {
     private static Logger logger = Logger.getLogger(Challenger.class);
     private Config config = new Config();
     String code1 = "";
-    //private String proposition;
+
 
 
     public String generateCode() {
@@ -45,32 +43,27 @@ public class Challenger {
 
         if (nbCoup < 2)
             System.out.println("Vous avez gagné en  " + nbCoup + " coup");
-        else if (retour && nbCoup <= config.getEssai().intValue() )
+        else if (retour && nbCoup <= config.getEssai().intValue())
             System.out.println("Vous avez réussi en " + nbCoup + " coups");
         else
-            System.out.println("Vous avez perdu la solution était " +  code1 +" "+ nbCoup);
+            System.out.println("Vous avez perdu la solution était " + code1 + " " + nbCoup);
         logger.info("Sortie de la methode play");
 
     }
 
     public boolean saisieUtilisateur() {
-        logger.debug("Entre dans la methode saisieUtilisateur");
+        logger.info("Entre dans la methode saisieUtilisateur");
         Scanner sc = new Scanner(System.in);
         String propo1 = "";
         boolean b;
-        //String regExp = "^[0-9]+[0-9]$";
-        System.out.println("Merci de saisir un code à " + config.getCombinaison() + " chiffres");
+
+
         do {
+            System.out.println("Merci de saisir un code à " + config.getCombinaison() + " chiffres");
+            propo1 = sc.nextLine();
 
-              propo1 = sc.nextLine();
-            //propo1.matches(regExp);
-             //Pattern p = Pattern.compile(propo1);
-            // Matcher m = p.matcher("[0-9]");
-
-              b = Pattern.matches("^[0-9]+[0-9]$",(propo1));
+            b = Pattern.matches("^[0-9]+[0-9]$", propo1);
         } while (!b);
-
-       // String propo2 = String.valueOf(propositionChiffre);
         boolean retour = true;
         for (int i = 0; i < config.getCombinaison(); i++) {
             char code3 = code1.charAt(i);
@@ -87,7 +80,7 @@ public class Challenger {
             }
         }
         System.out.println("");
-        logger.debug("Sortie de la methode saisieUtilisateur");
+        logger.info("Sortie de la methode saisieUtilisateur");
         return retour;
 
     }
