@@ -2,6 +2,7 @@ package jeu;
 
 import org.apache.log4j.Logger;
 
+
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -9,14 +10,18 @@ import java.util.regex.Pattern;
 public class Defenseur {
     private Config config = new Config();
     private String code = "";
+    private String code1 = "";
+    private String  resultat = "";
 
     private static Logger logger = Logger.getLogger(Defenseur.class);
 
     public void play() {
 
         System.out.println("Bienvenue dans le mode défenseur");
-        saisieUtilisateur();
-        System.out.println(code);
+        codeJoueur();
+        ordiCode();
+        compareCode();
+
         /*Voici les spécifications pour l’autre mode “défenseur” :
 
 Le joueur (cette fois dans le rôle de défenseur) définit une combinaison de X chiffres aléatoirement.
@@ -26,7 +31,7 @@ L’intelligence artificielle fait une autre proposition en se basant sur la ré
 Il y a un nombre limité d’essais.*/
     }
 
-    public String saisieUtilisateur() {
+    public String codeJoueur() {
         Scanner sc = new Scanner(System.in);
 
         boolean b;
@@ -40,4 +45,33 @@ Il y a un nombre limité d’essais.*/
         return code;
 
     }
+
+    public String ordiCode() {
+        int code = 0;
+        int i = 0;
+        Random c = new Random();
+        do {
+            code = c.nextInt(9);
+            i++;
+            code1 = code1 + String.valueOf(code);
+        } while (i < config.getCombinaison());
+        if (config.getDeveloppeur())
+            System.out.println(code1);
+        return code1 ;
+    }
+
+    public void compareCode() {
+        logger.info("Entre dans la methode compareCode");
+        Scanner sc = new Scanner(System.in);
+        boolean b ;
+
+        do {
+            System.out.println("Merci de saisir un code à " + config.getCombinaison() + " chiffres");
+            resultat = sc.nextLine();
+
+            b = Pattern.matches("^[+\\-=]+$", resultat);
+        } while (!b || resultat.length() != code1.length());
+        logger.info("Sortie de la methode compareCode resultat="+resultat);
+    }
+
 }

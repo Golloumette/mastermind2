@@ -56,14 +56,12 @@ public class Challenger {
         Scanner sc = new Scanner(System.in);
         String propo1 = "";
         boolean b;
-
-
         do {
             System.out.println("Merci de saisir un code à " + config.getCombinaison() + " chiffres");
             propo1 = sc.nextLine();
 
-            b = Pattern.matches("^[0-9]+[0-9]$", propo1);
-        } while (!b);
+            b = Pattern.matches("^[0-9]+$", propo1);
+        } while (!b || propo1.length() != code1.length());
         boolean retour = true;
         for (int i = 0; i < config.getCombinaison(); i++) {
             char code3 = code1.charAt(i);
