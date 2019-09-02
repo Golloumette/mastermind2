@@ -70,10 +70,10 @@ public class Challenger {
                 System.out.print("=");
 
             else if (code3 < propo2) {
-                System.out.print("+");
+                System.out.print("-");
                 retour = false;
             } else {
-                System.out.print("-");
+                System.out.print("+");
                 retour = false;
             }
         }

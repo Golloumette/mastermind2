@@ -1,8 +1,9 @@
 package jeu;
 
-import java.util.ArrayList;
-
 public class CoupJoue {
+    private String Code= "";
+    private String Resultat ="";
+
     public String getCode() {
         return Code;
     }
@@ -11,25 +12,19 @@ public class CoupJoue {
         Code = code;
     }
 
-    public String getRésultat() {
-        return Résultat;
+    public String getResultat() {
+        return Resultat;
     }
 
-    public void setRésultat(String résultat) {
-        Résultat = résultat;
+    public void setResultat(String resultat) {
+        Resultat = resultat;
     }
-
-    private String Code= "";
-    private String Résultat ="";
-
-
-    ArrayList CompareCode = new ArrayList();
 
     @Override
     public String toString() {
         return "CoupJoue{" +
                 "Code='" + Code + '\'' +
-                ", Résultat='" + Résultat + '\'' +
+                ", Resultat='" + Resultat + '\'' +
                 '}';
     }
  
