@@ -100,8 +100,14 @@ Il y a un nombre limité d’essais.*/
         char symboleResultat = resultat.charAt(i);
         char propo = ordiCode().charAt(i);
         if (symboleResultat == inferieur)
-        Random chiffre = new Random(historique.get(historique.size()-1));}
+
+
         logger.info("Sortie de la methode compareCode resultat="+resultat);
     }
+
+    public void nbrinferieur(){
+            Random rand = new Random();
+            int nombreAleatoire = rand.nextInt((historique.get(historique.size()-1).getCode())-0+1)+0;
+        }
 
 }
