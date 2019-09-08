@@ -11,9 +11,13 @@ import java.util.regex.Pattern;
 
 public class Defenseur {
     private Config config = new Config();
-    private List<CoupJoue> historique  = new ArrayList <CoupJoue>();
+    private List<CoupJoue> historique = new ArrayList<CoupJoue>();
     private String code = "";
-    private String  resultat = "";
+
+
+    private static char inferieur = '-';
+    private static char superieur = '+';
+    private static char egal = '=';
 
     private static Logger logger = Logger.getLogger(Defenseur.class);
 
@@ -24,11 +28,12 @@ public class Defenseur {
         do {
             ordiCode();
             compareCode();
-            for (CoupJoue coupJoue : historique){
-                System.out.println(" Affichage de l'historique code = " + coupJoue.getCode()+" résultat = "+coupJoue.getResultat());
+            for (CoupJoue coupJoue : historique) {
+                System.out.println(" Affichage de l'historique code = " + coupJoue.getCode() + " résultat = " + coupJoue.getResultat());
             }
 
-        } while (!code.equals(historique.get(historique.size()-1).getCode()) && historique.size()<config.getEssai());
+        }
+        while (!code.equals(historique.get(historique.size() - 1).getCode()) && historique.size() < config.getEssai());
 
     }
         /*Voici les spécifications pour l’autre mode “défenseur” :
@@ -45,6 +50,7 @@ Il y a un nombre limité d’essais.*/
     public String codeJoueur() {
         Scanner sc = new Scanner(System.in);
 
+
         boolean b;
         do {
             System.out.println("Merci de saisir votre code secret à " + config.getCombinaison() + " chiffres");
@@ -56,58 +62,72 @@ Il y a un nombre limité d’essais.*/
         return code;
 
     }
+
     /*
     L'ordi fait une proposition
      */
     public String ordiCode() {
         CoupJoue coupJoue = new CoupJoue();
-
-        int code = 0;
-        int i = 0;
         String code1 = "";
-        Random c = new Random();
-        do {
-            code = c.nextInt(9);
-            i++;
-            code1 = code1 + String.valueOf(code);
-        } while (i < config.getCombinaison());
-        if (config.getDeveloppeur())
-            System.out.println( " L'odinateur propose la combinaison suivante :"+code1);
-        coupJoue.setCode(code1);
-        historique.add(coupJoue);
-        return code1 ;
+        if (historique.size() == 0) {
+            int code = 0;
+            int i = 0;
+
+            Random c = new Random();
+            do {
+                code = c.nextInt(9);
+                i++;
+                code1 = code1 + String.valueOf(code);
+            } while (i < config.getCombinaison());
+            if (config.getDeveloppeur())
+                System.out.println(" L'odinateur propose la combinaison suivante :" + code1);
+            coupJoue.setCode(code1);
+            historique.add(coupJoue);
+            return code1;
+        } else {
+            CoupJoue dernierCoupJoue = historique.get(historique.size()-1 );
+            CoupJoue coupJoue1 = new CoupJoue();
+            int code = 0;
+            String code2 ="";
+            for (int j = 0; j < config.getCombinaison(); j++) {
+                char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
+                char propo = dernierCoupJoue.getCode().charAt(j);
+                if (symboleResultat == inferieur) {
+
+                     code = 0 + (int)(Math.random() * ((propo - 0) + 1));
+                    code2 = code2 + String.valueOf(code);
+                } else if (symboleResultat==superieur){
+                    code = propo + (int)(Math.random() * ((9 - propo) + 1));
+                    code2=code2+ String.valueOf(code);
+                }else{
+                code2=code2+String.valueOf(propo);
+                }
+            }
+            coupJoue1.setCode(code2);
+            historique.add(coupJoue1);
+            return code2;
+        }
     }
+
     /*
     Le joueur indique à l'odinateur le résultat de sa proposition
      */
     public void compareCode() {
         logger.info("Entre dans la methode compareCode");
-        char inferieur = '-' ;
-        char superieur = '+';
-        char egal = '=';
+        String resultat = "";
+
 
         Scanner sc = new Scanner(System.in);
-        boolean b ;
+        boolean b;
 
         do {
             System.out.println("Merci d'indiquer pour chaque chiffre si le nombre à trouver est plus grand (+) plus petit (-) ou correct (=)");
             resultat = sc.nextLine();
 
             b = Pattern.matches("^[+\\-=]+$", resultat);
-        } while (!b );//|| resultat.length() != code1.length());
-        historique.get(historique.size()-1).setResultat(resultat);
-        for(int i = 0; i<config.getCombinaison();i++){
-        char symboleResultat = resultat.charAt(i);
-        char propo = ordiCode().charAt(i);
-        if (symboleResultat == inferieur)
-
-
-        logger.info("Sortie de la methode compareCode resultat="+resultat);
+        } while (!b);//|| resultat.length() != code1.length());
+        historique.get(historique.size() - 1).setResultat(resultat);
+        logger.info("Sortie de la methode compareCode resultat=" + resultat);
     }
-
-    public void nbrinferieur(){
-            Random rand = new Random();
-            int nombreAleatoire = rand.nextInt((historique.get(historique.size()-1).getCode())-0+1)+0;
-        }
 
 }
