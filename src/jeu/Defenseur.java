@@ -49,8 +49,6 @@ Il y a un nombre limité d’essais.*/
      */
     public String codeJoueur() {
         Scanner sc = new Scanner(System.in);
-
-
         boolean b;
         do {
             System.out.println("Merci de saisir votre code secret à " + config.getCombinaison() + " chiffres");
@@ -60,7 +58,6 @@ Il y a un nombre limité d’essais.*/
         } while (!b);
 
         return code;
-
     }
 
     /*
