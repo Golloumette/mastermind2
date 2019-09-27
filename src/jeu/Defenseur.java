@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+
+
 public class Defenseur {
     private Config config = new Config();
     private List<CoupJoue> historique = new ArrayList<CoupJoue>();
@@ -65,8 +67,10 @@ Il y a un nombre limité d’essais.*/
      */
     public String ordiCode() {
         CoupJoue coupJoue = new CoupJoue();
+        CoupJoue.setCodeMin("0");// 1er tour enregistrement du minimum
+        CoupJoue.setCodeMax("9");// 1 er tour enregistrement du maximum
         String code1 = "";
-        int code=0;
+        int code = 0;
         if (historique.size() == 0) {
             int i = 0;
 
@@ -82,24 +86,33 @@ Il y a un nombre limité d’essais.*/
             historique.add(coupJoue);
             return code1;
         } else {
-            CoupJoue dernierCoupJoue = historique.get(historique.size()-1 );
-            String code2 ="";
+            CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
+            String code2 = "";
 
-            for (int j = 0; j <config.getCombinaison(); j++) {
-                char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
-                char propo = dernierCoupJoue.getCode().charAt(j);
-                int ipropo =Character.getNumericValue(propo);
+            for (int j = 0; j < config.getCombinaison(); j++) {
+               char symboleResultat = dernierCoupJoue.getResultat().charAt(j);// affichage du caractère +/-/=
+                char propoCorrect= dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
+                int ipropoCorrect=Character.getNumericValue(propoCorrect);//transformation en integer
+                char propoMax = CoupJoue.getCodeMax().charAt(j);// decouper le codemax par charactère
+                int ipropoMax = Character.getNumericValue(propoMax);// transformer le  codemax en integer
+                char propoMin= CoupJoue.getCodeMin().charAt(j);// decouper le codemin par charactere
+                int ipropoMin= Character.getNumericValue(propoMin);// transformer le codemin en integer
                 if (symboleResultat == inferieur) {
+                    CoupJoue.setCodeMax(String.valueOf(ipropoMax));
 
-                     code = generateRandom(0,ipropo);
-                    code2 = code2+ String.valueOf(code);
 
-                } else if (symboleResultat==superieur){
-                    code = generateRandom((ipropo+1),9);
-                    code2= code2+String.valueOf(code);
+                    code = generateRandom(ipropoMin,ipropoMax);
 
-                }else{
-                code2= code2 +String.valueOf(propo);
+                    code2 = code2 + String.valueOf(code);
+                    CoupJoue.setCodeMin(String.valueOf(ipropoMin));
+
+                } else if (symboleResultat == superieur) {
+                    CoupJoue.setCodeMin(String.valueOf(ipropoMin));
+                    code = generateRandom((ipropoMin + 1), ipropoMax);
+                    code2 = code2 + String.valueOf(code);
+
+                } else {
+                    code2 = code2 + String.valueOf(ipropoCorrect);
 
                 }
             }
@@ -129,17 +142,35 @@ Il y a un nombre limité d’essais.*/
         historique.get(historique.size() - 1).setResultat(resultat);
         logger.info("Sortie de la methode compareCode resultat=" + resultat);
     }
-    private int generateRandom(int min , int max) {
 
+    private int generateRandom(int min, int max) {
 
-     int nombre =    (min+ (int) (Math.random() * (max - min)));
-        /*if (exclusMax){
-            return nombre - 1;
-        }
-        if (exclusMin){
-            return nombre + 1;
-        }*/
+        int nombre = (min + (int) (Math.random() * (max - min)));
+
         return nombre;
     }
 
+    /*public int limitecode() {
+        CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
+
+        for (int j = 0; j < config.getCombinaison(); j++) {
+            char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
+            if (symboleResultat == inferieur) {
+                String valeurMax = 9;
+                CoupJoue.setCodeMax(valeurMax);
+                char propoMax = CoupJoue.getCodeMax().charAt(j);
+                int codeMax= Character.getNumericValue(propoMax);
+                return codeMax;
+            } else if (symboleResultat == superieur) {
+                String valeurMin = 0;
+                CoupJoue.setCodeMin(valeurMin);
+                char propoMin = CoupJoue.getCodeMin().charAt(j);
+                int codeMin=Character.getNumericValue(propoMin);
+                return codeMin;
+            }
+        }
+
+
+
+    }*/
 }
