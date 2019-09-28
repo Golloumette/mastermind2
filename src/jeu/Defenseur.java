@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 
-
 public class Defenseur {
     private Config config = new Config();
     private List<CoupJoue> historique = new ArrayList<CoupJoue>();
@@ -30,13 +29,10 @@ public class Defenseur {
         do {
             ordiCode();
             compareCode();
-            /*for (CoupJoue coupJoue : historique) {
-                System.out.println(" Affichage de l'historique code = " + coupJoue.getCode() + " résultat = " + coupJoue.getResultat());
-            }*/
-
+            remplaceCode();
         }
         while (!code.equals(historique.get(historique.size() - 1).getCode()) && historique.size() < config.getEssai());
-
+        System.out.println("L'ordinateur a trouvé la combinaison ");
     }
         /*Voici les spécifications pour l’autre mode “défenseur” :
 
@@ -66,9 +62,8 @@ Il y a un nombre limité d’essais.*/
     L'ordi fait une proposition
      */
     public String ordiCode() {
+        logger.info("Entré dans la méthode ordiCode");
         CoupJoue coupJoue = new CoupJoue();
-        CoupJoue.setCodeMin("0");// 1er tour enregistrement du minimum
-        CoupJoue.setCodeMax("9");// 1 er tour enregistrement du maximum
         String code1 = "";
         int code = 0;
         if (historique.size() == 0) {
@@ -80,47 +75,33 @@ Il y a un nombre limité d’essais.*/
                 i++;
                 code1 = code1 + String.valueOf(code);
             } while (i < config.getCombinaison());
-            if (config.getDeveloppeur())
-                System.out.println(" L'odinateur propose la combinaison suivante :" + code1);
+            System.out.println(" L'odinateur propose la combinaison suivante :" + code1);
             coupJoue.setCode(code1);
             historique.add(coupJoue);
             return code1;
         } else {
             CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
             String code2 = "";
-
             for (int j = 0; j < config.getCombinaison(); j++) {
-               char symboleResultat = dernierCoupJoue.getResultat().charAt(j);// affichage du caractère +/-/=
-                char propoCorrect= dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
-                int ipropoCorrect=Character.getNumericValue(propoCorrect);//transformation en integer
                 char propoMax = CoupJoue.getCodeMax().charAt(j);// decouper le codemax par charactère
                 int ipropoMax = Character.getNumericValue(propoMax);// transformer le  codemax en integer
-                char propoMin= CoupJoue.getCodeMin().charAt(j);// decouper le codemin par charactere
-                int ipropoMin= Character.getNumericValue(propoMin);// transformer le codemin en integer
-                if (symboleResultat == inferieur) {
-                    CoupJoue.setCodeMax(String.valueOf(ipropoMax));
+                char propoMin = CoupJoue.getCodeMin().charAt(j);// decouper le codemin par charactere
+                int ipropoMin = Character.getNumericValue(propoMin);// transformer le codemin en integer
+                char symboleResultat = dernierCoupJoue.getResultat().charAt(j);// affichage du caractère +/-/=
+                logger.info("ipropomax=" + ipropoMax + "ipropomin=" + ipropoMin + "symbole" + symboleResultat);
+
+                code = generateRandom(ipropoMin, ipropoMax);
+                code2 = code2 + String.valueOf(code);
 
 
-                    code = generateRandom(ipropoMin,ipropoMax);
-
-                    code2 = code2 + String.valueOf(code);
-                    CoupJoue.setCodeMin(String.valueOf(ipropoMin));
-
-                } else if (symboleResultat == superieur) {
-                    CoupJoue.setCodeMin(String.valueOf(ipropoMin));
-                    code = generateRandom((ipropoMin + 1), ipropoMax);
-                    code2 = code2 + String.valueOf(code);
-
-                } else {
-                    code2 = code2 + String.valueOf(ipropoCorrect);
-
-                }
             }
             System.out.println(" L'odinateur propose la combinaison suivante :" + code2);
             coupJoue.setCode(code2);
             historique.add(coupJoue);
+            logger.info("Sortie de la méthode ordiCode");
             return code2;
         }
+
     }
 
     /*
@@ -144,33 +125,54 @@ Il y a un nombre limité d’essais.*/
     }
 
     private int generateRandom(int min, int max) {
-
-        int nombre = (min + (int) (Math.random() * (max - min)));
-
-        return nombre;
-    }
-
-    /*public int limitecode() {
-        CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
-
-        for (int j = 0; j < config.getCombinaison(); j++) {
-            char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
-            if (symboleResultat == inferieur) {
-                String valeurMax = 9;
-                CoupJoue.setCodeMax(valeurMax);
-                char propoMax = CoupJoue.getCodeMax().charAt(j);
-                int codeMax= Character.getNumericValue(propoMax);
-                return codeMax;
-            } else if (symboleResultat == superieur) {
-                String valeurMin = 0;
-                CoupJoue.setCodeMin(valeurMin);
-                char propoMin = CoupJoue.getCodeMin().charAt(j);
-                int codeMin=Character.getNumericValue(propoMin);
-                return codeMin;
-            }
+       if (min == max) {
+            int nombre = (min + (int) (Math.random() * (max - min)));
+            return nombre;
+        } else {
+           int nombre = min + (int) (Math.random() * (max - min) );
+           return nombre;
+       }
         }
 
 
 
-    }*/
+    private String remplaceCharAtPosition(String code, int position, char c) {
+
+        String retour = "";
+
+        for (int i = 0; i < code.length(); i++) {
+            if (i == position) {
+                retour = retour + c;
+            } else {
+                retour = retour + code.substring(i, i + 1);
+            }
+        }
+        return retour;
+    }
+
+    private void remplaceCode() {
+
+        logger.info("Entrée dans la méthode replaceCode");
+        CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
+        logger.info("tableau " + dernierCoupJoue + "code max=" + CoupJoue.getCodeMax() + "codemin=" + CoupJoue.getCodeMin());
+        for (int j = 0; j < config.getCombinaison(); j++) {
+            char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
+            char codeChiffre = dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
+            logger.info("codeChiifre" + codeChiffre);
+            if (symboleResultat == inferieur) {
+                CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre));
+                logger.info("affichage de code" + dernierCoupJoue.getCode());
+            } else if (symboleResultat == superieur) {
+                CoupJoue.setCodeMin(remplaceCharAtPosition(CoupJoue.getCodeMin(), j, codeChiffre));
+            } else {
+                CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre));
+                CoupJoue.setCodeMin(remplaceCharAtPosition(CoupJoue.getCodeMin(), j, codeChiffre));
+
+            }
+
+
+        }
+        logger.info("tableau " + dernierCoupJoue + "code max=" + CoupJoue.getCodeMax() + "codemin=" + CoupJoue.getCodeMin() + "sortie de la méthode remplaceCode");
+    }
+
 }

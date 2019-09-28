@@ -29,8 +29,8 @@ public class CoupJoue {
         CoupJoue.codeMax = codeMax;
     }
 
-    private static   String codeMin="";
-    private  static String codeMax="";
+    private static   String codeMin="0000";
+    private  static String codeMax="9999";
 
 
     public String getCode() {

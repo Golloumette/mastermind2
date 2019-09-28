@@ -30,7 +30,7 @@ public class Challenger {
 
 
     public void play() {
-        logger.info("Sortie de la methode play");
+        logger.info("Entrée dans la methode play");
         System.out.println("Bienvenue dans le mode challenger");
         generateCode();
         int nbCoup = 0;
