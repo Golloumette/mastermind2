@@ -3,7 +3,8 @@ package jeu;
 
 public class test {
     public static void main(String[] args) {
-        String retour = "";
+        int nombre=0;
+        /*String retour = "";
         int c = 7;
         String code ="0000";
         int position = 2;
@@ -25,9 +26,14 @@ public class test {
         test.generateRandom(4, 8, true, false);*/
 
         //System.out.println(5 + (int)(Math.random() * ((5 - 5) ))+"chiffe random");
-        int min = 6;
-        int max = 8;
-        System.out.println(min + (int) (Math.random() * ((max - min)+1) ));
+        int min = 8;
+        int max = 9;
+        do {
+            nombre = min + (int) (Math.random() * ((max - min) + 1));
+        } while (nombre == min || nombre == max);// random entre 0 et 9 inclus
+        System.out.println(nombre);//0;9
+       // System.out.println((int)Math.random() * ( max - min ));//0
+        //System.out.println(min + (int)(Math.random() * (max - min)));//0 pas de 9
 
         /*private int generateRandom ( int min, int max, boolean exclusMin, boolean exclusMax){*/
 
