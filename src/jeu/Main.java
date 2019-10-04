@@ -31,7 +31,7 @@ public class Main {
                 break;
             default:
                 Duel duel = new Duel();
-                duel.Duel();
+                duel.play();
                 break;
 
         }

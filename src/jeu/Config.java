@@ -11,8 +11,19 @@ public class Config {
     private Boolean developpeur;
     private static Logger logger = Logger.getLogger(Config.class);
 
-    public Config() {
+    public static Config getRessource() {
+        if (ressource == null) {
+            ressource = new Config();
+        }
+        return ressource;
+    }
+
+
+    private static Config ressource;
+
+    private Config() {
         readerproperty();
+
     }
 
 
@@ -28,8 +39,8 @@ public class Config {
         return developpeur;
     }
 
-    public void  readerproperty() {
-       logger.info("Entre dans la methode readerproperty");
+    public void readerproperty() {
+        logger.info("Entre dans la methode readerproperty");
 
         ResourceBundle config = ResourceBundle.getBundle("toto");
 
@@ -39,5 +50,5 @@ public class Config {
 
         logger.info("Sortie de la methode readerproperty");
     }
-    }
+}
 

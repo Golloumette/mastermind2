@@ -11,7 +11,11 @@ import java.util.regex.Pattern;
 
 
 public class Defenseur {
-    private Config config = new Config();
+
+    public List<CoupJoue> getHistorique() {
+        return historique;
+    }
+
     private List<CoupJoue> historique = new ArrayList<CoupJoue>();
     private String code = "";
 
@@ -31,8 +35,8 @@ public class Defenseur {
             compareCode();
             remplaceCode();
         }
-        while (!code.equals(historique.get(historique.size() - 1).getCode()) && historique.size() < config.getEssai());
-        if (historique.size()< config.getEssai()) {
+        while (!code.equals(historique.get(historique.size() - 1).getCode()) && historique.size() < Config.getRessource().getEssai());
+        if (historique.size()< Config.getRessource().getEssai()) {
             System.out.println("L'ordinateur a trouvé la combinaison en " + historique.size() + " coups");
         }else {
             System.out.println("Vous avez gagné, l'ordinateur n'a pas trouvé la combinaison.");
@@ -53,7 +57,7 @@ Il y a un nombre limité d’essais.*/
         Scanner sc = new Scanner(System.in);
         boolean b;
         do {
-            System.out.println("Merci de saisir votre code secret à " + config.getCombinaison() + " chiffres");
+            System.out.println("Merci de saisir votre code secret à " + Config.getRessource().getCombinaison() + " chiffres");
             code = sc.nextLine();
 
             b = Pattern.matches("^[0-9]+[0-9]$", code);
@@ -78,7 +82,7 @@ Il y a un nombre limité d’essais.*/
                 code = c.nextInt(9);
                 i++;
                 code1 = code1 + String.valueOf(code);
-            } while (i < config.getCombinaison());
+            } while (i < Config.getRessource().getCombinaison());
             System.out.println(" L'odinateur propose la combinaison suivante :" + code1);
             coupJoue.setCode(code1);
             historique.add(coupJoue);
@@ -86,13 +90,13 @@ Il y a un nombre limité d’essais.*/
         } else {
             CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
             String code2 = "";
-            for (int j = 0; j < config.getCombinaison(); j++) {
+            for (int j = 0; j < Config.getRessource().getCombinaison(); j++) {
                 char propoMax = CoupJoue.getCodeMax().charAt(j);// decouper le codemax par charactère
                 int ipropoMax = Character.getNumericValue(propoMax);// transformer le  codemax en integer
                 char propoMin = CoupJoue.getCodeMin().charAt(j);// decouper le codemin par charactere
                 int ipropoMin = Character.getNumericValue(propoMin);// transformer le codemin en integer
                 char symboleResultat = dernierCoupJoue.getResultat().charAt(j);// affichage du caractère +/-/=
-                logger.info("ipropomax=" + ipropoMax +" "+ "ipropomin=" + ipropoMin +" "+ "symbole" + symboleResultat);
+                logger.debug("ipropomax=" + ipropoMax +" "+ "ipropomin=" + ipropoMin +" "+ "symbole" + symboleResultat);
                 if (symboleResultat == inferieur) {
                     do {
                         code = generateRandom(ipropoMin, ipropoMax);
@@ -167,12 +171,12 @@ Il y a un nombre limité d’essais.*/
             return retour;
         }
 
-        private void remplaceCode () {
+        public void remplaceCode () {
 
             logger.info("Entrée dans la méthode replaceCode");
             CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
             logger.info("tableau " + dernierCoupJoue +""+ "codemin=" + CoupJoue.getCodeMin()+"" + "code max=" + CoupJoue.getCodeMax());
-            for (int j = 0; j < config.getCombinaison(); j++) {
+            for (int j = 0; j < Config.getRessource().getCombinaison(); j++) {
                 char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
                 char codeChiffre = dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
                 logger.info("codeChifre" + codeChiffre);

@@ -29,8 +29,18 @@ public class CoupJoue {
         CoupJoue.codeMax = codeMax;
     }
 
-    private static   String codeMin="0000";
-    private  static String codeMax="9999";
+    private static   String codeMin="";
+    private  static String codeMax="";
+
+    static {
+        Config config = new Config();
+        for (int i=0;i<config.getCombinaison();i++) {
+            codeMin += "0";
+            codeMax += "9";
+        }
+    }
+
+
 
 
     public String getCode() {
