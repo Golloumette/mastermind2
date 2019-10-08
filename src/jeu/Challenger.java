@@ -17,6 +17,7 @@ public class Challenger {
 
 
     public String generateCode() {
+        logger.info("Entrée dans la methode generateCode");
         int code = 0;
         int i = 0;
         Random c = new Random();
@@ -27,6 +28,7 @@ public class Challenger {
         } while (i < Config.getRessource().getCombinaison());
         if (Config.getRessource().getDeveloppeur())
             System.out.println(code1);
+        logger.info("Sortie de la methode generateCode");
         return code1;
     }
 

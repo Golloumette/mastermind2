@@ -54,6 +54,7 @@ Il y a un nombre limité d’essais.*/
     Le joueur choisi son code secret
      */
     public String codeJoueur() {
+        logger.info("Entrée dans la methode codeJoueur");
         Scanner sc = new Scanner(System.in);
         boolean b;
         do {
@@ -62,6 +63,7 @@ Il y a un nombre limité d’essais.*/
 
             b = Pattern.matches("^[0-9]+[0-9]$", code);
         } while (!b);
+        logger.info("Sortie de la methode codeJoueur");
 
         return code;
     }
@@ -98,15 +100,12 @@ Il y a un nombre limité d’essais.*/
                 char symboleResultat = dernierCoupJoue.getResultat().charAt(j);// affichage du caractère +/-/=
                 logger.debug("ipropomax=" + ipropoMax +" "+ "ipropomin=" + ipropoMin +" "+ "symbole" + symboleResultat);
                 if (symboleResultat == inferieur) {
-                    do {
-                        code = generateRandom(ipropoMin, ipropoMax);
-                    } while (code == ipropoMax);
+
+                        code = generateRandom(ipropoMin, (ipropoMax-1));
                     code2 = code2 + String.valueOf(code);
                 } else if (symboleResultat == superieur) {
-                    do {
-                        code = generateRandom(ipropoMin, ipropoMax);
 
-                    } while (code == ipropoMin);
+                        code = generateRandom((ipropoMin+1), ipropoMax);
                     code2 = code2 + String.valueOf(code);
                 } else {
                     code = generateRandom(ipropoMin, ipropoMax);
@@ -151,7 +150,7 @@ Il y a un nombre limité d’essais.*/
             } else {
                     int nombre = min + (int) (Math.random() * ((max - min) + 1));
                  // random entre 0 et 9 inclus
-            logger.info("Nombre="+nombre+" Sortie dans la méthode generateRandom");
+            logger.info(String.format("Nombre= %s",nombre,"Sortie de la méthode generateRandom"));
                 return nombre;
 
         }}
@@ -179,10 +178,10 @@ Il y a un nombre limité d’essais.*/
             for (int j = 0; j < Config.getRessource().getCombinaison(); j++) {
                 char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
                 char codeChiffre = dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
-                logger.info("codeChifre" + codeChiffre);
+                logger.debug("codeChifre" + codeChiffre) ;
                 if (symboleResultat == inferieur) {
                     CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre));
-                    logger.info("affichage de code" + dernierCoupJoue.getCode());
+                    logger.debug ("affichage de code" + dernierCoupJoue.getCode());
                 } else if (symboleResultat == superieur) {
                     CoupJoue.setCodeMin(remplaceCharAtPosition(CoupJoue.getCodeMin(), j, codeChiffre));
                 } else {

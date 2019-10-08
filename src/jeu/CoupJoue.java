@@ -33,8 +33,7 @@ public class CoupJoue {
     private  static String codeMax="";
 
     static {
-        Config config = new Config();
-        for (int i=0;i<config.getCombinaison();i++) {
+        for (int i=0;i<Config.getRessource().getCombinaison();i++) {
             codeMin += "0";
             codeMax += "9";
         }

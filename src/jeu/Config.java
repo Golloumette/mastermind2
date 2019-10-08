@@ -42,7 +42,7 @@ public class Config {
     public void readerproperty() {
         logger.info("Entre dans la methode readerproperty");
 
-        ResourceBundle config = ResourceBundle.getBundle("toto");
+        ResourceBundle config = ResourceBundle.getBundle("config");
 
         combinaison = Integer.decode(config.getString("Combinaison"));
         essai = Integer.decode(config.getString("Essai"));
