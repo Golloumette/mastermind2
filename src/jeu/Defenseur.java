@@ -150,7 +150,7 @@ Il y a un nombre limité d’essais.*/
             } else {
                     int nombre = min + (int) (Math.random() * ((max - min) + 1));
                  // random entre 0 et 9 inclus
-            logger.info(String.format("Nombre= %s",nombre,"Sortie de la méthode generateRandom"));
+            logger.info(String.format("Nombre= %s Sortie de la méthode generateRandom",nombre));
                 return nombre;
 
         }}

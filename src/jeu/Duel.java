@@ -2,7 +2,6 @@ package jeu;
 
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Duel {
@@ -11,7 +10,6 @@ public class Duel {
     private Challenger challenger = new Challenger();
     String code1 = "";
     private String code = "";
-    //private List<CoupJoue> historique = new ArrayList<CoupJoue>();
     private static Logger logger = Logger.getLogger(Duel.class);
 
 
@@ -26,7 +24,6 @@ public class Duel {
             defenseur.compareCode();
             defenseur.remplaceCode();
             System.out.println("A vous de trouver la oombinaison de l'ordinateur");
-            //challenger.saisieUtilisateur();
             retour = challenger.saisieUtilisateur();
             logger.info("Valeur de retour= "+retour);
         }while (!retour && challenger.nbCoup < Config.getRessource().getEssai().intValue()
