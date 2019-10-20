@@ -11,8 +11,8 @@ public class Challenger {
     private static Logger logger = Logger.getLogger(Challenger.class);
 
 
-    String code1 = "";
-    public int nbCoup = 0;
+    private String code1 = "";
+    private int nbCoup = 0;
 
 
 
@@ -28,6 +28,7 @@ public class Challenger {
         } while (i < Config.getRessource().getCombinaison());
         if (Config.getRessource().getDeveloppeur())
             System.out.println(code1);
+        logger.debug("Le code généré est"+code1);
         logger.info("Sortie de la methode generateCode");
         return code1;
     }

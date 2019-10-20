@@ -17,6 +17,7 @@ public class Menu {
         System.out.println("1 - Mode Challenger");
         System.out.println("2 - Mode Défenseur");
         System.out.println("3 - Mode Duel");
+        System.out.println("4 - Quitter le jeu");
 
 
     }

@@ -17,12 +17,17 @@ public class Defenseur {
     }
 
     private List<CoupJoue> historique = new ArrayList<CoupJoue>();
+
+    public String getCode() {
+        return code;
+    }
+
     private String code = "";
 
 
     private static char inferieur = '-';
     private static char superieur = '+';
-    private static char egal = '=';
+
 
     private static Logger logger = Logger.getLogger(Defenseur.class);
 
@@ -42,13 +47,7 @@ public class Defenseur {
             System.out.println("Vous avez gagné, l'ordinateur n'a pas trouvé la combinaison.");
         }
     }
-        /*Voici les spécifications pour l’autre mode “défenseur” :
 
-Le joueur (cette fois dans le rôle de défenseur) définit une combinaison de X chiffres aléatoirement.
-L'intelligence artificielle de l’ordinateur doit faire une proposition d’une combinaison de X chiffres (c’est le rôle attaquant).
-Le joueur indique pour chaque chiffre de la combinaison proposée si le chiffre de sa combinaison est plus grand (+), plus petit (-) ou si c’est le bon (=).
-L’intelligence artificielle fait une autre proposition en se basant sur la réponse fournit par le joueur.
-Il y a un nombre limité d’essais.*/
 
     /*
     Le joueur choisi son code secret
@@ -155,7 +154,13 @@ Il y a un nombre limité d’essais.*/
 
         }}
 
-
+    /**
+     *
+     * @param code
+     * @param position
+     * @param c
+     * @return
+     */
         private String remplaceCharAtPosition (String code,int position, char c){
 
             String retour = "";

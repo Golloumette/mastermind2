@@ -13,13 +13,12 @@ public class Main {
         //Log in console in and log file
         logger.info("Démarrage du programme !!");
         logger.debug("Démarrage du programme !!Mode débug");
-
         Menu menu = new Menu();
          int nbMenu;
         do {
             nbMenu = menu.runMenu();
 
-        } while (nbMenu < 1 || nbMenu > 3);
+        } while (nbMenu < 1 || nbMenu > 4);
         switch (nbMenu) {
             case 1:
                 Challenger challenger = new Challenger();
@@ -29,12 +28,17 @@ public class Main {
                 Defenseur defenseur = new Defenseur();
                 defenseur.play();
                 break;
-            default:
+
+            case 3 :
                 Duel duel = new Duel();
                 duel.play();
                 break;
+            default :
+                System.out.println("Au revoir");
+                System.exit(0);
 
         }
+        logger.info("Fin du programme");
     }
 }
 
