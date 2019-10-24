@@ -15,7 +15,11 @@ public class Challenger {
     private int nbCoup = 0;
 
 
-
+    /** Génére un code aléatoire
+     *
+     * @return le code généré
+     *
+     */
     public String generateCode() {
         logger.info("Entrée dans la methode generateCode");
         int code = 0;
@@ -27,13 +31,15 @@ public class Challenger {
             code1 = code1 + String.valueOf(code);
         } while (i < Config.getRessource().getCombinaison());
         if (Config.getRessource().getDeveloppeur())
-            System.out.println(code1);
-        logger.debug("Le code généré est"+code1);
+            System.out.println("Le code généré"+code1);
+        logger.debug("Le code généré est" + code1);
         logger.info("Sortie de la methode generateCode");
         return code1;
     }
 
-
+    /**
+     *
+     */
     public void play() {
         logger.info("Entrée dans la methode play");
         System.out.println("Bienvenue dans le mode challenger");
@@ -44,7 +50,7 @@ public class Challenger {
         do {
             retour = saisieUtilisateur();
             nbCoup++;
-        } while (!retour && nbCoup <Config.getRessource().getEssai().intValue());
+        } while (!retour && nbCoup < Config.getRessource().getEssai().intValue());
 
         if (nbCoup < 2)
             System.out.println("Vous avez gagné en  " + nbCoup + " coup");
@@ -52,9 +58,17 @@ public class Challenger {
             System.out.println("Vous avez réussi en " + nbCoup + " coups");
         else
             System.out.println("Vous avez perdu la solution était " + code1 + " " + nbCoup);
+        Rejouer.getRessource().choix();
+
         logger.info("Sortie de la methode play");
 
+
     }
+
+    /**
+     * Proposition du joueur
+     * @return code du joueur, sous la forme d"une String
+     */
 
     public boolean saisieUtilisateur() {
         logger.info("Entre dans la methode saisieUtilisateur");
@@ -87,6 +101,8 @@ public class Challenger {
         return retour;
 
     }
+
+
 }
 
 

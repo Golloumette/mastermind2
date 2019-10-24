@@ -38,7 +38,6 @@ public class Menu {
             nbMenu = 0;
         }
 
-        //} //while (!responseIsGood);
         return nbMenu;
 
 

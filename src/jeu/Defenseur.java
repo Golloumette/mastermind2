@@ -45,7 +45,7 @@ public class Defenseur {
             System.out.println("L'ordinateur a trouvé la combinaison en " + historique.size() + " coups");
         }else {
             System.out.println("Vous avez gagné, l'ordinateur n'a pas trouvé la combinaison.");
-        }
+        }Rejouer.getRessource().choix();
     }
 
 
@@ -136,7 +136,7 @@ public class Defenseur {
                 resultat = sc.nextLine();
 
                 b = Pattern.matches("^[+\\-=]+$", resultat);
-            } while (!b);//|| resultat.length() != code1.length());
+            } while (!b);
             historique.get(historique.size() - 1).setResultat(resultat);
             logger.info("Sortie de la methode compareCode resultat=" + resultat);
         }
@@ -178,15 +178,15 @@ public class Defenseur {
         public void remplaceCode () {
 
             logger.info("Entrée dans la méthode replaceCode");
+
             CoupJoue dernierCoupJoue = historique.get(historique.size() - 1);
-            logger.info("tableau " + dernierCoupJoue +""+ "codemin=" + CoupJoue.getCodeMin()+"" + "code max=" + CoupJoue.getCodeMax());
+
+            logger.debug(String.format("tableau %s code min= %s code max=%s", dernierCoupJoue, CoupJoue.getCodeMin(),CoupJoue.getCodeMax()));
             for (int j = 0; j < Config.getRessource().getCombinaison(); j++) {
                 char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
                 char codeChiffre = dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
-                logger.debug("codeChifre" + codeChiffre) ;
                 if (symboleResultat == inferieur) {
                     CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre));
-                    logger.debug ("affichage de code" + dernierCoupJoue.getCode());
                 } else if (symboleResultat == superieur) {
                     CoupJoue.setCodeMin(remplaceCharAtPosition(CoupJoue.getCodeMin(), j, codeChiffre));
                 } else {
@@ -197,7 +197,10 @@ public class Defenseur {
 
 
             }
-            logger.info("tableau " + dernierCoupJoue +""+ "code max=" + CoupJoue.getCodeMax()+"" + "codemin=" + CoupJoue.getCodeMin() +""+ "sortie de la méthode remplaceCode");
+            logger.debug(String.format("tableau %s code min =%s code max=%s",dernierCoupJoue,CoupJoue.getCodeMin(),CoupJoue.getCodeMax()));
+            logger.info("Sortie de la methode remplaceCode");
         }
 
+
     }
+
