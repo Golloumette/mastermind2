@@ -54,7 +54,7 @@ public class Defenseur {
     }
 
 
-    /*
+    /**
     Le joueur choisi son code secret
      */
     public String codeJoueur() {
@@ -72,9 +72,6 @@ public class Defenseur {
         return code;
     }
 
-    /*
-    L'ordi fait une proposition
-     */
 
     /**
      * Proposition de l'ordinateur

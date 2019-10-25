@@ -2,13 +2,14 @@ package jeu;
 
 import org.apache.log4j.Logger;
 
-
+/**
+ * classe principale mastermind
+ */
 public class Main {
 
     private static Logger logger = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        //Log in console in and log file
         logger.info("Demarrage du programme !!");
         logger.debug("Demarrage du programme !!Mode debug");
         boolean choix = true;
