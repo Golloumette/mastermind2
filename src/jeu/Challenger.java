@@ -7,6 +7,11 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Mode Challenger le joueur cherche le code de l'ordinateur
+ * Le joueur a un nombre limité d'essai
+ */
+
 public class Challenger {
     private static Logger logger = Logger.getLogger(Challenger.class);
 
@@ -17,7 +22,7 @@ public class Challenger {
 
     /** Génére un code aléatoire
      *
-     * @return le code généré
+     * @return le code généré, sous la forme d'une String
      *
      */
     public String generateCode() {
@@ -38,7 +43,7 @@ public class Challenger {
     }
 
     /**
-     *
+     *  Ensemble de méthode pour jouer
      */
     public void play() {
         logger.info("Entrée dans la methode play");

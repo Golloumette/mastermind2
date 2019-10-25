@@ -10,6 +10,10 @@ public class Duel {
     private Challenger challenger = new Challenger();
     private static Logger logger = Logger.getLogger(Duel.class);
 
+    /**
+     * Combinaison des méthodes de challenger et défenseur
+     *
+     */
 
     public void play() {
         logger.info("Enree dans la méthode play");
