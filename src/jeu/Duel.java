@@ -4,6 +4,10 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Mode duel le joueur et l'ordinateur doivent trouver le code de l'autre
+ */
+
 public class Duel {
 
     private Defenseur defenseur = new Defenseur();

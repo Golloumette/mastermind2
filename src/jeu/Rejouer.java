@@ -3,9 +3,15 @@ package jeu;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * permet de rejouer après la fin de la partie
+ */
 public class Rejouer {
 
-
+    /**
+     * permet de recuperer le choix du joueur
+     * @return return le choix du joueur
+     */
     public boolean choix() {
         Scanner sc = new Scanner(System.in);
         String resultat ;
@@ -31,6 +37,10 @@ public class Rejouer {
         return yes;
     }
 
+    /**
+     * initialise la classe pour le premiere fois
+     * @return
+     */
     public static Rejouer getRessource() {
         if (ressource == null) {
             ressource = new Rejouer();

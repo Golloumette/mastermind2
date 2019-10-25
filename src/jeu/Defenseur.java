@@ -9,6 +9,10 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Mode defenseur l'ordinateur doit trouver la combinaison
+ */
+
 
 public class Defenseur {
 
@@ -71,6 +75,11 @@ public class Defenseur {
     /*
     L'ordi fait une proposition
      */
+
+    /**
+     * Proposition de l'ordinateur
+     * @return nouveau code sous la forme d'un String
+     */
     public String ordiCode() {
         logger.info("Entré dans la méthode ordiCode");
         CoupJoue coupJoue = new CoupJoue();
@@ -101,11 +110,11 @@ public class Defenseur {
                 logger.debug("ipropomax=" + ipropoMax + " " + "ipropomin=" + ipropoMin + " " + "symbole" + symboleResultat);
                 if (symboleResultat == inferieur) {
 
-                    code = generateRandom(ipropoMin, (ipropoMax - 1));
+                    code = generateRandom(ipropoMin, (ipropoMax));
                     code2 = code2 + String.valueOf(code);
                 } else if (symboleResultat == superieur) {
 
-                    code = generateRandom((ipropoMin + 1), ipropoMax);
+                    code = generateRandom((ipropoMin), ipropoMax);
                     code2 = code2 + String.valueOf(code);
                 } else {
                     code = generateRandom(ipropoMin, ipropoMax);
@@ -144,6 +153,14 @@ public class Defenseur {
         logger.info("Sortie de la methode compareCode resultat=" + resultat);
     }
 
+    /**
+     * Genere les chiffres entre deux bornes
+     * @param min
+     *              charactere minimum
+     * @param max
+     *              character maximum
+     * @return un nouveau code
+     */
     private int generateRandom(int min, int max) {
         logger.info("Entrée dans la méthode generateRandom");
         if (min == max) {
@@ -152,7 +169,8 @@ public class Defenseur {
         } else {
             int nombre = min + (int) (Math.random() * ((max - min) + 1));
             // random entre 0 et 9 inclus
-            logger.info(String.format("Nombre= %s Sortie de la méthode generateRandom", nombre));
+            logger.debug("nouveau code"+ nombre);
+            logger.info("Sortie de la méthode generateRandom");
             return nombre;
 
         }
@@ -161,7 +179,7 @@ public class Defenseur {
     /**
      * @param code     code à modifier
      * @param position position du character à modifier
-     * @param c        character a une position donne
+     * @param c        caracter a une position donne
      * @return nouveau code sous le format String
      */
     private String remplaceCharAtPosition(String code, int position, char c) {
@@ -193,8 +211,14 @@ public class Defenseur {
             char symboleResultat = dernierCoupJoue.getResultat().charAt(j);
             char codeChiffre = dernierCoupJoue.getCode().charAt(j);//decoupage du code ordi par caractère
             if (symboleResultat == inferieur) {
-                CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre));
+             int codeChiffre2 = Character.getNumericValue(codeChiffre);
+             String codeChiffre3  = String.valueOf(codeChiffre2-1);
+             codeChiffre=codeChiffre3.charAt(0);
+                CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre ));
             } else if (symboleResultat == superieur) {
+                int codeChiffre2 = Character.getNumericValue(codeChiffre);
+                String codeChiffre3  = String.valueOf(codeChiffre2+1);
+                codeChiffre=codeChiffre3.charAt(0);
                 CoupJoue.setCodeMin(remplaceCharAtPosition(CoupJoue.getCodeMin(), j, codeChiffre));
             } else {
                 CoupJoue.setCodeMax(remplaceCharAtPosition(CoupJoue.getCodeMax(), j, codeChiffre));
