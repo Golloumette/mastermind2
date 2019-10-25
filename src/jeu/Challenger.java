@@ -36,7 +36,7 @@ public class Challenger {
             code1 = code1 + String.valueOf(code);
         } while (i < Config.getRessource().getCombinaison());
         if (Config.getRessource().getDeveloppeur())
-            System.out.println("Le code généré"+code1);
+            System.out.println("Le code à decouvrir est "+code1);
         logger.debug("Le code généré est" + code1);
         logger.info("Sortie de la methode generateCode");
         return code1;
@@ -81,7 +81,7 @@ public class Challenger {
         String propo1 = "";
         boolean b;
         do {
-            System.out.println("Merci de saisir un code à " + Config.getRessource().getCombinaison() + " chiffres");
+            System.out.println("Merci de proposer un code à " + Config.getRessource().getCombinaison() + " chiffres");
             propo1 = sc.nextLine();
 
             b = Pattern.matches("^[0-9]+$", propo1);

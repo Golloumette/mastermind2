@@ -1,5 +1,9 @@
 package jeu;
 
+
+/**
+ *  permet d'enregistrer les coups joues
+ */
 public class CoupJoue {
     @Override
     public String toString() {
@@ -38,9 +42,6 @@ public class CoupJoue {
             codeMax += "9";
         }
     }
-
-
-
 
     public String getCode() {
         return code;
