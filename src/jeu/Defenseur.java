@@ -125,7 +125,7 @@ public class Defenseur {
 
 
     /**
-     * attribue les symboles
+     * affiche les symboles
      */
     public void compareCode() {
         logger.info("Entre dans la methode compareCode");
